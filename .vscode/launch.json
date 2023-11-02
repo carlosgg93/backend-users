@@ -1,13 +1,13 @@
 {
   "configurations": [
     {
-      "name": "Attach by Process ID",
-      "processId": "${command:PickProcess}",
-      "request": "attach",
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "type": "node"
+      "program": "${workspaceFolder}\\index.js"
     }
   ]
 }
