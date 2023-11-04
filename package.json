@@ -14,7 +14,13 @@
     "testEnvironment": "node"
   },
   "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json"
+    "extends": "./node_modules/standard/eslintrc.json",
+    "env": {
+      "commonjs": true,
+      "es6": true,
+      "node": true,
+      "jest": true
+    }
   },
   "name": "backend-users",
   "version": "1.0.0",

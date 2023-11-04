@@ -1,19 +1,19 @@
-const palindrome = require('../utils/testing.js').palindrome
+const { palindrome } = require('../utils/testing')
 
-test('palindrome of a', () => {
-  const result = palindrome('a')
+test('palindrome of carlos', () => {
+  const result = palindrome('carlos')
 
-  expect(result).toBe('a')
+  expect(result).toBe('solrac')
 })
 
-test('palindrome of react', () => {
-  const result = palindrome('react')
+test('palindrome of carlos', () => {
+  const result = palindrome('')
 
-  expect(result).toBe('tcaer')
+  expect(result).toBe('')
 })
 
-test('palindrome of releveler', () => {
-  const result = palindrome('releveler')
+test('palindrome of undefined', () => {
+  const result = palindrome()
 
-  expect(result).toBe('releveler')
+  expect(result).toBeUndefined()
 })
