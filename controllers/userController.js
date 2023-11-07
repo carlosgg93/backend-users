@@ -1,6 +1,7 @@
-const User = require('../models/userModel.js')
 const userRouter = require('express').Router()
+const User = require('../models/userModel.js')
 const logger = require('../utils/logger.js')
+const bcrypt = require('bcrypt')
 
 // userRouter.get('/info', (req, res) => {
 //   const date = new Date()
@@ -45,14 +46,18 @@ userRouter.delete(':id', (req, res) => {
 
 userRouter.post('/', (req, res) => {
   const body = req.body
-  if (!body.name || !body.phone || !body.email) {
+  if (!body.username || !body.name || !body.passwordHash || !body.email) {
     return res.status(400).json({
       error: 'content missing'
     })
   }
 
+  const password = bcrypt.hashSync(body.passwordHash, 10)
+
   const user = new User({
+    username: body.username,
     name: body.name,
+    passwordHash: password,
     email: body.email,
     phone: body.phone
   })
