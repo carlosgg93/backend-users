@@ -64,6 +64,8 @@ describe('Creating a user', () => {
       .expect('Content-Type', /application\/json/)
   })
 
+  const usersAtEnd = await User.find({})
+
   afterAll(() => {
     mongoose.connection.close()
     server.close()

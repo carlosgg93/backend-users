@@ -10,11 +10,18 @@ const bcrypt = require('bcrypt')
 //   })
 // })
 
+// promise
 userRouter.get('/', (req, res) => {
   User.find({}).then(users => {
     res.json(users)
   })
 })
+
+// async/await
+// userRouter.get('/', async (req, res) => {
+//   const users = await User.find({})
+//   res.json(users)
+// })
 
 userRouter.get(':id', (req, res) => {
   const id = Number(req.params.id)
