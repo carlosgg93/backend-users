@@ -23,8 +23,8 @@ userRouter.get('/', (req, res) => {
 //   res.json(users)
 // })
 
-userRouter.get(':id', (req, res) => {
-  const id = Number(req.params.id)
+userRouter.get('/:id', (req, res) => {
+  const { id } = req.params
   User.findById(id)
     .then(note => {
       if (note) {
@@ -39,9 +39,10 @@ userRouter.get(':id', (req, res) => {
     })
 })
 
-userRouter.delete(':id', (req, res) => {
-  const id = Number(req.params.id)
-  User.findByIdAndRemove(id)
+userRouter.delete('/:id', (req, res) => {
+  const { id } = req.params
+
+  User.findByIdAndDelete(id)
     .then(result => {
       res.status(204).end()
     })
@@ -52,21 +53,23 @@ userRouter.delete(':id', (req, res) => {
 })
 
 userRouter.post('/', (req, res) => {
-  const body = req.body
-  if (!body.username || !body.name || !body.passwordHash || !body.email) {
+  const { body } = req
+  const { username, name, passwordHash, email, phone } = body
+
+  if (!username || !name || !passwordHash || !email) {
     return res.status(400).json({
       error: 'content missing'
     })
   }
 
-  const password = bcrypt.hashSync(body.passwordHash, 10)
+  const password = bcrypt.hashSync(passwordHash, 10)
 
   const user = new User({
-    username: body.username,
-    name: body.name,
+    username,
+    name,
     passwordHash: password,
-    email: body.email,
-    phone: body.phone
+    email,
+    phone
   })
 
   user.save().then(savedUser => {

@@ -15,8 +15,8 @@ notesRouter.get('/', (req, res) => {
 //   res.json(users)
 // })
 
-notesRouter.get(':id', (req, res) => {
-  const id = Number(req.params.id)
+notesRouter.get('/:id', (req, res) => {
+  const { id } = req.params
   Note.findById(id)
     .then(note => {
       if (note) {
@@ -31,9 +31,9 @@ notesRouter.get(':id', (req, res) => {
     })
 })
 
-notesRouter.delete(':id', (req, res) => {
-  const id = Number(req.params.id)
-  Note.findByIdAndRemove(id)
+notesRouter.delete('/:id', (req, res) => {
+  const { id } = req.params
+  Note.findByIdAndDelete(id)
     .then(result => {
       res.status(204).end()
     })
