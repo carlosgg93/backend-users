@@ -1,6 +1,7 @@
 const notesRouter = require('express').Router()
 const Note = require('../models/notesModel.js')
 const logger = require('../utils/logger.js')
+const { getAuth } = require('../middlewares/getAuth.js')
 
 // promise
 notesRouter.get('/', (req, res) => {
@@ -31,19 +32,16 @@ notesRouter.get('/:id', (req, res) => {
     })
 })
 
-notesRouter.delete('/:id', (req, res) => {
+notesRouter.delete('/:id', getAuth, async (req, res, next) => {
   const { id } = req.params
-  Note.findByIdAndDelete(id)
-    .then(result => {
-      res.status(204).end()
-    })
-    .catch(error => {
-      logger.error(error)
-      res.status(400).send({ error: 'malformatted id' })
-    })
+
+  const resp = await Note.findByIdAndDelete(id)
+  if (resp === null) return res.sendStatus(404)
+
+  res.status(204).end()
 })
 
-notesRouter.post('/', (req, res) => {
+notesRouter.post('/', getAuth, async (req, res, next) => {
   const { body } = req
   const { title, content } = body
 

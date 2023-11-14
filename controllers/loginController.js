@@ -5,9 +5,9 @@ const jwt = require('jsonwebtoken')
 
 loginRouter.post('/', async (req, res) => {
   const { body } = req
-  const { username, password } = body
+  const { userName, password } = body
 
-  const user = await User.findOne(username)
+  const user = await User.findOne({ username: userName })
   const passwordCorrect = user === null
     ? false
     : await bcrypt.compare(password, user.passwordHash)
@@ -17,7 +17,8 @@ loginRouter.post('/', async (req, res) => {
       error: 'invalid username or password'
     })
   }
-  jwt.sign({ username, id: user._id }, process.env.SECRET, (err, token) => {
+
+  jwt.sign({ userName, id: user._id }, process.env.SECRET, (err, token) => {
     if (err) {
       return res.status(500).json({
         error: 'error signing token'
