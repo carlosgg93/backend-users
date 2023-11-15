@@ -1,7 +1,7 @@
 const notesRouter = require('express').Router()
 const Note = require('../models/notesModel.js')
 const logger = require('../utils/logger.js')
-const { getAuth } = require('../middlewares/getAuth.js')
+const getAuth = require('../middlewares/getAuth.js')
 
 // promise
 notesRouter.get('/', (req, res) => {
@@ -56,9 +56,8 @@ notesRouter.post('/', getAuth, async (req, res, next) => {
     content
   })
 
-  note.save().then(savedNote => {
-    res.json(savedNote)
-  })
+  const savedNote = await note.save()
+  return res.json(savedNote)
 })
 
 module.exports = notesRouter
