@@ -3,13 +3,6 @@ const User = require('../models/userModel.js')
 const logger = require('../utils/logger.js')
 const bcrypt = require('bcrypt')
 
-// userRouter.get('/info', (req, res) => {
-//   const date = new Date()
-//   User.find({}).then(users => {
-//     res.send(`<p>Phonebook has info for ${users.length} people</p><p>${date}</p>`)
-//   })
-// })
-
 // promise
 userRouter.get('/', (req, res) => {
   User.find({}).then(users => {

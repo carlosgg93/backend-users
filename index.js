@@ -3,6 +3,7 @@ const config = require('./utils/config.js')
 const userRouter = require('./controllers/userController.js')
 const notesRouter = require('./controllers/notesController.js')
 const loginRouter = require('./controllers/loginController.js')
+const registerRouter = require('./controllers/registerController.js')
 require('./mongo.js')
 
 const express = require('express')
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use('/api/users', userRouter)
 app.use('/api/notes', notesRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/register', registerRouter)
 
 const server = app.listen(config.PORT, () => {
   logger.info('Server listening on port', config.PORT)
