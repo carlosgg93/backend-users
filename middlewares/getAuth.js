@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken')
 
 module.exports = (request, response, next) => {
-  const authorization = request.get('authorization')
+  // const authorization = request.get('authorization')
+  const auth = request.get('authorization') || request.body.token || request.headers['x-access-token']
   let token = ''
 
-  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
-    token = authorization.substring(7)
+  if (auth && auth.toLowerCase().startsWith('bearer')) {
+    token = auth.substring(7)
   }
 
   const decodedToken = jwt.verify(token, process.env.SECRET)
